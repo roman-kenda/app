@@ -1,4 +1,5 @@
 class Product < ActiveRecord::Base
+	
     validates :title, :description, :image_url, presence: true
     validates :price, numericality: {greater_then_or_equal_to: 0.01}
     validates :title, uniqueness: true
@@ -6,5 +7,10 @@ class Product < ActiveRecord::Base
     	with: %r{\.(gif|jpg|png)\Z}i,
     	message: 'URL должен указывать на изображения в формата GIF, JPG или PNG'
     }
+    validates :title, allow_blank: true, length: {minimum: 10}
+
+    def self.latest
+        Product.order(:updated_at).last 
+    end
 
 end
