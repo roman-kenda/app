@@ -8,8 +8,13 @@
 </head>
 <body class = '<%= controller.controller_name%>'>
     <div id = "banner">
+        <%= form_tag store_path, class: 'locale' do %>
+            <%= select_tag 'set_locale', options_for_select(LANGUAGES, I18n.locale.to_s), onchange: 'this.form.submit()' %>
+            <%= submit_tag 'submit' %>
+            <%= javascript_tag "$('.locale input').hide()" %>
+        <% end %>
         <%= image_tag("logo.png") %>
-        <%= @page_title || "Pragmatic Bookshelf" %>
+        <%= @page_title || t('.title') %>
     </div>
 
     <div id = "colums">
@@ -25,10 +30,10 @@
 
 
             <ul>
-                <li><a href = "">Home</a></li>
-                <li><a href = "">Questions</a></li>
-                <li><a href = "">News</a></li>
-                <li><a href = "">Contact</a></li>
+                <li><%=link_to t('.home'), store_path%></li>
+                <li><a href = ""><%= t('.questions')%></a></li>
+                <li><a href = ""><%= t('.news')%></a></li>
+                <li><a href = ""><%= t('.contact')%></a></li>
                 <li><h5> <%= Time.now.ctime %></h5> </li>
             </ul>
             <% if session[:user_id] %>
